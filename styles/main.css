@@ -1,0 +1,16 @@
+body {
+	position: relative;
+}
+
+table {
+	width:  100%;
+}
+
+td {
+	width: 130px;
+	height: 130px;
+}
+
+#alien-section {
+	padding:  0 50px 0 50px;
+}

@@ -1,47 +1,34 @@
 var startXposition = window.innerWidth / 2 - 75;
 var startYposition = window.innerHeight - 60;
 
+var cannonCooldown = true;
+
+var clusterRowNumber = 2;
+var clusterAliensInRow = 10;
+var clusterFallSpeed = 20;
+
 var axisInterval;
-var fireInterval;
 
 var spaceship = new Spaceship(
 	startXposition,
-	startYposition
-	);
+	startYposition);
 
 spaceship.show();
 
-//create the alien array
 var aliens = [];
-var alienWidth = 50;
-var alienHeight = 50;
-for (var i = 0; i < 20 ; i++) {
-	aliens[i] = new Alien(alienWidth, alienHeight, 20, 20);
-	aliens[i].show();
+
+for (var i = 0 ; i < 20 ; i++) {
+	var alien = new Alien(50, 50, 20, 20);
+	alien.show();
+	aliens.push(alien);
 }
 
-//create the table
-var table = document.createElement("table");
-var tbody = document.createElement("tbody");
-var tr1 = document.createElement("tr");
-var tr2 = document.createElement("tr");
-table.appendChild(tbody);
-tbody.appendChild(tr1);
-tbody.appendChild(tr2);
-var section = document.getElementById("alien-section");
-section.appendChild(table);
+var alienCluster = new AlienCluster(clusterRowNumber , clusterAliensInRow, clusterFallSpeed, "main-alien-table", "alien-position");
 
-//populate the table
-for (var x = 0 ; x < aliens.length ; x++){
-	var td = document.createElement("td");
-	td.appendChild(aliens[x].element);
-	if (x < 10) {		
-		tr1.appendChild(td);
-	} else {
-		tr2.appendChild(td);
-	}
-}
 
+alienCluster.addAliens(aliens);
+alienCluster.show();
+alienCluster.startInvading();
 
 document.onkeydown = function(){
 	var KeyID = event.keyCode;
@@ -80,7 +67,13 @@ var keyPressByUser = function(){
 				}, 30);
 			break;
 			case 32:
-			spaceship.shoot(KeyID);
+			if (!cannonCooldown) {return;}
+			cannonCooldown = false;
+			setTimeout(function(){
+				spaceship.shoot(KeyID);
+				cannonCooldown = true;
+			}, 150);
+
 			break;
 		}
 	}

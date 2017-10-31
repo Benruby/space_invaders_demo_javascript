@@ -52,23 +52,20 @@ Shot.prototype.destroyShot = function() {
  Shot.prototype.checkHit = function() {
 
  	var shot = this.element.getBoundingClientRect();
- 	for (var i = 0 ; i < aliens.length; i++) {
+ 	for (var i = 0 ; i < alienCluster.aliens.length; i++) {
 
- 		var currentAlien = aliens[i].element.getBoundingClientRect();
+ 		var currentAlien = alienCluster.aliens[i].element.getBoundingClientRect();
 
  		if (!(shot.right < currentAlien.left || 
  			shot.left > currentAlien.right || 
  			shot.bottom < currentAlien.top || 
  			shot.top > currentAlien.bottom))
  		{
- 			aliens[i].explodeAndRemove();
+ 			alienCluster.aliens[i].explodeAndRemove();
+ 			alienCluster.aliens.splice(i, 1);
  			this.destroyShot();
  			return true;
- 		} else {
- 			console.log("no hit!")
- 		}
-
-
+ 		} 
  	}
 
  }

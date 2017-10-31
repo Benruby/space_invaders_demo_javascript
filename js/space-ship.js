@@ -20,9 +20,10 @@ Spaceship.prototype.show = function(){
 
 Spaceship.prototype.shoot = function(keyCode){
 	if (!keyCode) {return;}
+	var self = this;
 	var shot = new Shot(
-		this.xPosition +50,
-		this.yPosition - 50,
+		self.xPosition +50,
+		self.yPosition - 50,
 		10);
 	shot.show();
 	shot.launch();
@@ -32,15 +33,15 @@ Spaceship.prototype.move = function(keyCode) {
 	
 	if (!keyCode) {return;}
 
-	if (this.xPosition < 19 || this.xPosition > window.innerWidth - this.width) {
+	if (this.xPosition < 30 || this.xPosition > window.innerWidth - this.width) {
 		setKeyStateFalse(keyCode);
 		return;
 	}
 
 	switch(keyCode) {
-
+		//move left
 		case 37:
-		this.xPosition = (this.xPosition > 30) ? this.xPosition -= 15 : this.xPosition;
+		this.xPosition = (this.xPosition > 40) ? this.xPosition -= 15 : this.xPosition;
 		this.element.style.left = this.xPosition + "px";
 		break;
 
